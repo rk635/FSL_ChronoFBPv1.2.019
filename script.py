@@ -18,6 +18,20 @@ counter = 5
 gameExit = False
 gameStarted = False
 countDown = True
+listNumber = 1
+
+start_user = []
+stop_user = []
+start_track1 = [10.416, 62.754, 100.821, 163.337, 282.550]
+stop_track1 = [22.406, 77.271, 112.811, 177.860, 294.551]
+start_track2 = [24.045, 51.677, 125.068, 241.606, 277.445]
+stop_track2 = [38.562, 63.667, 137.057, 256.129, 289.446]
+start_track3 = [47.764, 103.014, 126.931, 185.108, 233.982]
+stop_track3 = [62.282, 115.003, 138.921, 197.108, 248.505]
+start_track4 = [15.298, 80.803, 149.296, 215.345, 280.326]
+stop_track4 = [27.918, 95.321, 161.285, 229.868, 292.327]
+start_track5 = [80.803, 109.749, 208.659, 240.591, 280.326]
+stop_track5 = [95.321, 121.738, 220.648, 255.114, 292.327]
 
 titleFont = pygame.font.Font('freesansbold.ttf', 32) 
 normalFont = pygame.font.Font('freesansbold.ttf', 18)
@@ -80,6 +94,7 @@ while not gameExit:
                 mainMenu.fill(white)
                 pygame.display.update()
                 
+                #TODO Polish up Countdown
                 while countDown:
                 
                     for event in pygame.event.get():
@@ -91,6 +106,20 @@ while not gameExit:
                             gameExit = True
                     
                     if counter == 0:
+                        #TODO trying moving all this code into the if statement
+                        timerText = timerFont.render('Begin!', True, black)
+                        mainMenu.blit(timerText, timerTextRect)
+                        pygame.display.update()
+                        pygame.time.wait(2000)
+                        
+                        pygame.display.update
+                        print('screen black')
+                        song_number = random.randint(1,5)
+                        start_time = t.time()
+                        pygame.mixer.init()
+                        pygame.mixer.music.load('audio_files/' + str(song_number) + '.mp3')
+                        pygame.mixer.music.play()
+                        print('song playing')
                         countDown = False
                     
                     else:
@@ -98,20 +127,28 @@ while not gameExit:
                         mainMenu.blit(timerText, timerTextRect)
                         print(str(counter))
                         pygame.display.update()
-                        
                         counter -= 1
                         mainMenu.fill(white)
-                    pygame.time.wait(1000)
+                        pygame.time.wait(1000)
                 
-                timerText = timerFont.render('Begin!', True, black)
-                mainMenu.blit(timerText, timerTextRect)
-                pygame.display.update()
-                
-                pygame.time.wait(3000)
-                song_number = random.randint(1,5)
-                start_time = t.time()
-                playsound('audio_files/' + str(song_number) + '.mp3', False)
+                print('audio is continuing to play')
+                while True:
+                    
+                    #TODO code for when it is pressed alternate between lists
+                    for event in pygame.event.get():
 
+                        if event.type == pygame.KEYDOWN:
+
+                            if event.key == pygame.K_SPACE:
+                                
+                                
+                                end_time = t.time()
+
+                                time_stamp = end_time - start_time
+
+                                print('spacebar pressed' + str(time_stamp))
+
+                                
     else:
         pygame.draw.rect(mainMenu, green, (150, 450, 100, 50))
             
@@ -129,7 +166,3 @@ while not gameExit:
     pygame.display.update()
 
 pygame.quit()
-    
-    
-
-
