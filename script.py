@@ -18,7 +18,7 @@ counter = 5
 gameExit = False
 gameStarted = False
 countDown = True
-listNumber = 1
+listNumber = 0
 
 start_user = []
 stop_user = []
@@ -115,6 +115,7 @@ while not gameExit:
                         pygame.display.update
                         print('screen black')
                         song_number = random.randint(1,5)
+                        print('song chosen is: ' + str(song_number))
                         start_time = t.time()
                         pygame.mixer.init()
                         pygame.mixer.music.load('audio_files/' + str(song_number) + '.mp3')
@@ -136,19 +137,38 @@ while not gameExit:
                     
                     #TODO code for when it is pressed alternate between lists
                     for event in pygame.event.get():
-
+                        
                         if event.type == pygame.KEYDOWN:
-
+                            
                             if event.key == pygame.K_SPACE:
                                 
                                 
-                                end_time = t.time()
 
-                                time_stamp = end_time - start_time
+                                if listNumber % 2 == 0:
+                                    end_time = t.time()
+                                    time_stamp = end_time - start_time
+                                    print('time stamp started: ' + str(round(time_stamp, 3)) + ' seconds')
 
-                                print('spacebar pressed' + str(time_stamp))
+                                    start_user.append(round(time_stamp,3))
+                                    
+                                    listNumber += 1
+                                    print(listNumber)
+                                    print(start_user)
+                                    continue
 
+                                if listNumber % 2 != 0:
+                                    end_time = t.time()
+                                    time_stamp = end_time - start_time
+                                    print('time stamp ending: ' + str(round(time_stamp, 3)) + ' seconds')
+
+                                    stop_user.append(round(time_stamp,3))
+
+                                    listNumber += 1
+                                    print(listNumber)
+                                    print(stop_user)
+                                    continue
                                 
+
     else:
         pygame.draw.rect(mainMenu, green, (150, 450, 100, 50))
             
