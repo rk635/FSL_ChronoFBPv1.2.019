@@ -5,6 +5,7 @@ import random
 from pygame.locals import *
 import numpy as np
 import csv
+import pandas as pd 
 import matplotlib.pyplot as plt
 
 pygame.init()
@@ -29,7 +30,8 @@ listNumber = 1
 iterator = 0
 start_user = []
 stop_user = []
-deviation = []
+startDeviation = []
+stopDeviation = []
 rows = []
 x_values = []
 y_values = []
@@ -108,7 +110,7 @@ while not gameExit:
                 mainMenu.fill(white)
                 pygame.display.update()
                 
-                #TODO Polish up Countdown
+                
                 while countDown:
                 
                     for event in pygame.event.get():
@@ -120,7 +122,7 @@ while not gameExit:
                             gameExit = True
                     
                     if counter == 0:
-                        #TODO trying moving all this code into the if statement
+                        
                         timerText = timerFont.render('Begin!', True, black)
                         mainMenu.blit(timerText, timerTextRect)
                         pygame.display.update()
@@ -129,7 +131,6 @@ while not gameExit:
                         pygame.display.update
                         
                         song_number = random.randint(1,5)
-                        print('song chosen is: ' + str(song_number))
                         start_time = t.time()
                         pygame.mixer.init()
                         pygame.mixer.music.load('audio_files/' + str(song_number) + '.mp3')
@@ -139,7 +140,6 @@ while not gameExit:
                     else:
                         timerText = timerFont.render(str(counter), True, black)
                         mainMenu.blit(timerText, timerTextRect)
-                        print(str(counter))
                         pygame.display.update()
                         counter -= 1
                         mainMenu.fill(white)
@@ -320,85 +320,82 @@ while not gameExit:
                                     continue
 
                 pygame.mixer.quit()   
-                #Rework this loop probably remove it         
+                         
                 
                 if song_number == 1:
 
-                    user_time_stamps = start_user + stop_user
-                    actual_time_stamps = start_track1 + stop_track1
                         
-                    length = len(actual_time_stamps)
+                    length = len(start_track1)
 
                     for values in range(length):
 
-                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
-
-                    averegeDeviation = np.array(deviation)
-                    average = np.mean(averegeDeviation)
+                        startDeviation.append(start_user[values] - start_track1[values])
+                        stopDeviation.append(stop_user[values] - stop_track1[values])
+                    averegeStartDeviation = np.array(startDeviation)
+                    averageStopDeviation = np.array(stopDeviation)
+                    startAverage = np.mean(averegeStartDeviation)
+                    stopAverage = np.mean(averageStopDeviation)
 
                     
                     
                 if song_number == 2:
-                    user_time_stamps = start_user + stop_user
-                    actual_time_stamps = start_track2 + stop_track2
-                        
-                    length = len(actual_time_stamps)
+                    length = len(start_track2)
 
                     for values in range(length):
 
-                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
-
-                    averegeDeviation = np.array(deviation)
-                    average = np.mean(averegeDeviation)
+                        startDeviation.append(start_user[values] - start_track2[values])
+                        stopDeviation.append(stop_user[values] - stop_track2[values])
+                    averegeStartDeviation = np.array(startDeviation)
+                    averageStopDeviation = np.array(stopDeviation)
+                    startAverage = np.mean(averegeStartDeviation)
+                    stopAverage = np.mean(averageStopDeviation)
 
                     
                         
 
                 if song_number == 3:
 
-                    user_time_stamps = start_user + stop_user
-                    actual_time_stamps = start_track3 + stop_track3
-                        
-                    length = len(actual_time_stamps)
+                    length = len(start_track3)
 
                     for values in range(length):
 
-                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
-
-                    averegeDeviation = np.array(deviation)
-                    average = np.mean(averegeDeviation)
+                        startDeviation.append(start_user[values] - start_track3[values])
+                        stopDeviation.append(stop_user[values] - stop_track3[values])
+                    averegeStartDeviation = np.array(startDeviation)
+                    averageStopDeviation = np.array(stopDeviation)
+                    startAverage = np.mean(averegeStartDeviation)
+                    stopAverage = np.mean(averageStopDeviation)
 
                     
 
                 if song_number == 4:
 
-                    user_time_stamps = start_user + stop_user
-                    actual_time_stamps = start_track4 + stop_track4
-                        
-                    length = len(actual_time_stamps)
+                    length = len(start_track4)
 
                     for values in range(length):
 
-                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
-
-                    averegeDeviation = np.array(deviation)
-                    average = np.mean(averegeDeviation)
+                        startDeviation.append(start_user[values] - start_track4[values])
+                        stopDeviation.append(stop_user[values] - stop_track4[values])
+                    averegeStartDeviation = np.array(startDeviation)
+                    averageStopDeviation = np.array(stopDeviation)
+                    startAverage = np.mean(averegeStartDeviation)
+                    stopAverage = np.mean(averageStopDeviation)
 
                     
 
                 if song_number == 5:
 
-                    user_time_stamps = start_user + stop_user
-                    actual_time_stamps = start_track5 + stop_track5
-                        
-                    length = len(actual_time_stamps)
+                    length = len(start_track5)
 
                     for values in range(length):
 
-                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
+                        startDeviation.append(start_user[values] - start_track5[values])
+                        stopDeviation.append(stop_user[values] - stop_track5[values])
+                    averegeStartDeviation = np.array(startDeviation)
+                    averageStopDeviation = np.array(stopDeviation)
+                    startAverage = np.mean(averegeStartDeviation)
+                    stopAverage = np.mean(averageStopDeviation)
 
-                    averegeDeviation = np.array(deviation)
-                    average = np.mean(averegeDeviation)
                 mainMenu.fill(white)
                 pygame.display.update()
                 gameStarted = False
@@ -422,41 +419,49 @@ while not gameExit:
         
     pygame.display.update()
 
-    
-
-
 while not resultsExit:
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
             resultsExit = True
     
-    directionText = normalFont.render('your average deviation was ' + str(round(average,3)) + ' seconds', True, black)
+    directionText = normalFont.render('Start Deviation: ' + str(round(startAverage,3)) + ' (sec)        Stop Deviation: ' + str(round(stopAverage,3)) + ' (sec)', True, black)
     mainMenu.blit(directionText, directionTextRect)
     pygame.display.update()
     
     with open('deviation.csv', 'a') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow([str(round(average,3))])
+        writer.writerow([str(round(startAverage,3)), str(round(stopAverage,3))])
     
     with open('deviation.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
 
         for row in csv_reader:
-            for col in row:
-                rows.append(col)
-    
-    while x_iterator <= (csv_reader.line_num - 1):
-        x_values.append(x_iterator)
-        x_iterator+=1
+            rows.append(row)
 
-    while y_iterator <= csv_reader.line_num:
-        y_values.append(rows[y_iterator])
-        y_iterator+=1
+    while x_iterator <= (csv_reader.line_num - 1):
+        x_values.append(str(x_iterator))
+        x_iterator+=1
+    print(x_values)
     
+    xpos = np.arange(len(x_values))
+    column_names = ['Start_Deviation', 'Stop_Deviation']
+    data = pd.read_csv('deviation.csv')
+    df = pd.DataFrame(data, columns = column_names)
+
+    yStart = data["Start_Deviation"]
+    print(yStart)
+    yStop = data["Stop_Deviation"]
+    print(yStop)
     resultsExit = True
-    
-plt.plot(x_values, y_values)
+
+plt.bar(xpos - 0.2 , yStart, width=0.4, label="Start Dev.")
+plt.bar(xpos + 0.2 , yStop, width=0.4, label="Stop Dev.")
+plt.ylabel("Seconds")
+plt.xlabel("Trials")
+plt.title("Recent Results")
+plt.xticks(xpos, x_values)
+plt.legend()
 plt.show()
 pygame.quit()
 
