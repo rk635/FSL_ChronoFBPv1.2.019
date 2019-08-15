@@ -3,6 +3,9 @@ import time as t
 from playsound import playsound
 import random
 from pygame.locals import *
+import numpy as np
+import csv
+import matplotlib.pyplot as plt
 
 pygame.init()
 
@@ -14,14 +17,25 @@ green = (0, 255, 0)
 lightGreen = (0, 200, 0)
 blue = (0, 0, 255)
 
+
 counter = 5
 gameExit = False
 gameStarted = False
 countDown = True
-listNumber = 0
-
+results = True
+resultsExit = False
+listPosition = 0
+listNumber = 1
+iterator = 0
 start_user = []
 stop_user = []
+deviation = []
+rows = []
+x_values = []
+y_values = []
+y_values_formatted = []
+x_iterator = 1
+y_iterator = 2
 start_track1 = [10.416, 62.754, 100.821, 163.337, 282.550]
 stop_track1 = [22.406, 77.271, 112.811, 177.860, 294.551]
 start_track2 = [24.045, 51.677, 125.068, 241.606, 277.445]
@@ -80,7 +94,7 @@ while not gameExit:
     if 150+100 > mouseMovement[0] > 150 and 450+50 > mouseMovement[1] > 450:
         pygame.draw.rect(mainMenu, lightGreen, (150, 450, 100, 50))
         if mousePress[0] == 1:
-            print('Start Button Pressed')
+            
             gameStarted = True
             while gameStarted:
                 
@@ -113,14 +127,13 @@ while not gameExit:
                         pygame.time.wait(2000)
                         
                         pygame.display.update
-                        print('screen black')
+                        
                         song_number = random.randint(1,5)
                         print('song chosen is: ' + str(song_number))
                         start_time = t.time()
                         pygame.mixer.init()
                         pygame.mixer.music.load('audio_files/' + str(song_number) + '.mp3')
                         pygame.mixer.music.play()
-                        print('song playing')
                         countDown = False
                     
                     else:
@@ -132,8 +145,8 @@ while not gameExit:
                         mainMenu.fill(white)
                         pygame.time.wait(1000)
                 
-                print('audio is continuing to play')
-                while True:
+                
+                while listPosition <= 4:
                     
                     #TODO code for when it is pressed alternate between lists
                     for event in pygame.event.get():
@@ -144,31 +157,255 @@ while not gameExit:
                                 
                                 
 
-                                if listNumber % 2 == 0:
+                                if listNumber == 1:
                                     end_time = t.time()
                                     time_stamp = end_time - start_time
-                                    print('time stamp started: ' + str(round(time_stamp, 3)) + ' seconds')
+                                    
 
                                     start_user.append(round(time_stamp,3))
                                     
-                                    listNumber += 1
-                                    print(listNumber)
-                                    print(start_user)
+                                    if song_number == 1:
+                                        
+                                        if start_user[listPosition] + 2 >= start_track1[listPosition] >= start_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - start_track1[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+                                    if song_number == 2:
+                                        
+                                        if start_user[listPosition] + 2 >= start_track2[listPosition] >= start_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - start_track2[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+                                    if song_number == 3:
+                                    
+                                        if start_user[listPosition] + 2 >= start_track3[listPosition] >= start_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - start_track3[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+                                    if song_number == 4:
+                                    
+                                        if start_user[listPosition] + 2 >= start_track4[listPosition] >= start_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - start_track4[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+                                   
+                                    if song_number == 5:
+
+                                        if start_user[listPosition] + 2 >= start_track5[listPosition] >= start_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - start_track5[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+                                    
+                                
+                                    listNumber = 2
+
+
                                     continue
 
-                                if listNumber % 2 != 0:
+                                if listNumber == 2:
                                     end_time = t.time()
                                     time_stamp = end_time - start_time
-                                    print('time stamp ending: ' + str(round(time_stamp, 3)) + ' seconds')
+                                    
 
                                     stop_user.append(round(time_stamp,3))
+                                    
+                                    if song_number == 1:
+                                        
+                                        if stop_user[listPosition] + 2 >= stop_track1[listPosition] >= stop_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
 
-                                    listNumber += 1
-                                    print(listNumber)
-                                    print(stop_user)
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - stop_track1[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+                                    if song_number == 2:
+                                        
+                                        if stop_user[listPosition] + 2 >= stop_track2[listPosition] >= stop_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - stop_track2[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+                                    
+                                    if song_number == 3:
+                                    
+                                        if stop_user[listPosition] + 2 >= stop_track3[listPosition] >= stop_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - stop_track3[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+                                    
+                                    if song_number == 4:
+                                    
+                                        if stop_user[listPosition] + 2 >= stop_track4[listPosition] >= stop_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - stop_track4[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+                                   
+                                    if song_number == 5:
+
+                                        if stop_user[listPosition] + 2 >= stop_track5[listPosition] >= stop_user[listPosition] - 2:
+                                            print('good')
+                                            mainMenu.fill(green)
+                                            pygame.display.update()
+                                        else:
+                                            print('bad')
+                                            mainMenu.fill(red)
+                                            off_value = time_stamp - stop_track5[listPosition]
+                                            directionText = normalFont.render('you were off by ' + str(round(off_value,3)) + ' seconds', True, black)
+                                            mainMenu.blit(directionText, directionTextRect)
+                                            pygame.display.update()
+
+                                    listPosition += 1
+                                    listNumber = 1
+
                                     continue
-                                
 
+                pygame.mixer.quit()   
+                #Rework this loop probably remove it         
+                
+                if song_number == 1:
+
+                    user_time_stamps = start_user + stop_user
+                    actual_time_stamps = start_track1 + stop_track1
+                        
+                    length = len(actual_time_stamps)
+
+                    for values in range(length):
+
+                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
+
+                    averegeDeviation = np.array(deviation)
+                    average = np.mean(averegeDeviation)
+
+                    
+                    
+                if song_number == 2:
+                    user_time_stamps = start_user + stop_user
+                    actual_time_stamps = start_track2 + stop_track2
+                        
+                    length = len(actual_time_stamps)
+
+                    for values in range(length):
+
+                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
+
+                    averegeDeviation = np.array(deviation)
+                    average = np.mean(averegeDeviation)
+
+                    
+                        
+
+                if song_number == 3:
+
+                    user_time_stamps = start_user + stop_user
+                    actual_time_stamps = start_track3 + stop_track3
+                        
+                    length = len(actual_time_stamps)
+
+                    for values in range(length):
+
+                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
+
+                    averegeDeviation = np.array(deviation)
+                    average = np.mean(averegeDeviation)
+
+                    
+
+                if song_number == 4:
+
+                    user_time_stamps = start_user + stop_user
+                    actual_time_stamps = start_track4 + stop_track4
+                        
+                    length = len(actual_time_stamps)
+
+                    for values in range(length):
+
+                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
+
+                    averegeDeviation = np.array(deviation)
+                    average = np.mean(averegeDeviation)
+
+                    
+
+                if song_number == 5:
+
+                    user_time_stamps = start_user + stop_user
+                    actual_time_stamps = start_track5 + stop_track5
+                        
+                    length = len(actual_time_stamps)
+
+                    for values in range(length):
+
+                        deviation.append(user_time_stamps[values] - actual_time_stamps[values])
+
+                    averegeDeviation = np.array(deviation)
+                    average = np.mean(averegeDeviation)
+                mainMenu.fill(white)
+                pygame.display.update()
+                gameStarted = False
+                gameExit = True
+            break 
+                
+                
     else:
         pygame.draw.rect(mainMenu, green, (150, 450, 100, 50))
             
@@ -185,4 +422,42 @@ while not gameExit:
         
     pygame.display.update()
 
+    
+
+
+while not resultsExit:
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+            resultsExit = True
+    
+    directionText = normalFont.render('your average deviation was ' + str(round(average,3)) + ' seconds', True, black)
+    mainMenu.blit(directionText, directionTextRect)
+    pygame.display.update()
+    
+    with open('deviation.csv', 'a') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([str(round(average,3))])
+    
+    with open('deviation.csv', 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+
+        for row in csv_reader:
+            for col in row:
+                rows.append(col)
+    
+    while x_iterator <= (csv_reader.line_num - 1):
+        x_values.append(x_iterator)
+        x_iterator+=1
+
+    while y_iterator <= csv_reader.line_num:
+        y_values.append(rows[y_iterator])
+        y_iterator+=1
+    
+    resultsExit = True
+    
+plt.plot(x_values, y_values)
+plt.show()
 pygame.quit()
+
+
